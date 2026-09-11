@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JolSetu — জলসেতু | The bridge to safe tubewell water</title>
+<meta name="description" content="AI reads a $1 arsenic test kit, QR-stamps every tubewell into a tamper-proof live map, and walks every family to the nearest verified safe well — offline, in Bangla.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand-wrap">
+    <img src="icon.svg" alt="" class="brand-icon" aria-hidden="true">
+    <div>
+      <div class="brand" id="brandName">JolSetu</div>
+      <div class="tagline" id="brandTag"></div>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button id="voiceBtn" class="chip" title="Text-to-speech">🔊 <span id="voiceLabel"></span></button>
+    <button id="langBtn" class="chip">বাংলা / EN</button>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs" aria-label="Sections"></nav>
+
+<main>
+  <!-- HOME -->
+  <section id="page-home" class="page">
+    <div class="hero card">
+      <p class="hero-quote" id="heroQuote"></p>
+      <div class="stats">
+        <div class="stat"><span class="stat-n" id="stat1">20M</span><span class="stat-d" data-i18n="hero_stat_20m"></span></div>
+        <div class="stat"><span class="stat-n" id="stat2">45M</span><span class="stat-d" data-i18n="hero_stat_45m"></span></div>
+        <div class="stat"><span class="stat-n" id="stat3">24,000+</span><span class="stat-d" data-i18n="hero_stat_24k"></span></div>
+      </div>
+      <p class="src-note">Flanagan et al., <em>Bull WHO</em> 2012 (2009 national survey) · Smith et al., <em>Bull WHO</em> 2000</p>
+    </div>
+    <div class="grid3">
+      <div class="card"><h3 data-i18n="how1_t"></h3><p data-i18n="how1_d"></p></div>
+      <div class="card"><h3 data-i18n="how2_t"></h3><p data-i18n="how2_d"></p></div>
+      <div class="card"><h3 data-i18n="how3_t"></h3><p data-i18n="how3_d"></p></div>
+    </div>
+    <div class="card pilot">
+      <h3 id="pilotTitle"></h3>
+      <p id="pilotBody"></p>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section id="page-map" class="page" hidden>
+    <h2 data-i18n="map_title"></h2>
+    <p class="sub" data-i18n="map_sub"></p>
+    <div class="legend">
+      <span class="dot safe"></span><span data-i18n="map_safe"></span>
+      <span class="dot unsafe"></span><span data-i18n="map_unsafe"></span>
+      <label class="chk"><input type="checkbox" id="deepOnly"> <span id="deepLabel">Deep wells only (≥150 ft)</span></label>
+    </div>
+    <div id="map"></div>
+    <div class="row">
+      <button class="btn primary" id="routeBtn" data-i18n="btn_route"></button>
+      <button class="btn" id="routeDemoBtn" data-i18n="route_demo"></button>
+    </div>
+    <div id="routeOut" class="route-out"></div>
+  </section>
+
+  <!-- TEST KIT AI -->
+  <section id="page-test" class="page" hidden>
+    <h2 data-i18n="test_title"></h2>
+    <p class="sub" data-i18n="test_sub"></p>
+    <div class="reader-grid">
+      <div class="card">
+        <canvas id="readerCanvas" width="640" height="400"></canvas>
+        <p class="hint" id="readerHint"></p>
+      </div>
+      <div class="card" id="readerResult">
+        <h3 data-i18n="test_result_unknown"></h3>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn" data-pad="0" data-i18n="test_demo_btn"></button>
+      <button class="btn" data-pad="35">35 µg/L</button>
+      <button class="btn" data-pad="90">90 µg/L</button>
+      <button class="btn" data-pad="220">220 µg/L</button>
+      <label class="btn upload">
+        <span data-i18n="test_upload"></span><input type="file" id="padFile" accept="image/*" hidden>
+      </label>
+    </div>
+    <div class="card note" data-i18n="test_kitfact"></div>
+  </section>
+
+  <!-- CHECK-IN -->
+  <section id="page-checkin" class="page" hidden>
+    <h2 data-i18n="ci_title"></h2>
+    <p class="sub" data-i18n="ci_sub"></p>
+    <div class="card">
+      <label for="wellPick"><span data-i18n="ci_pick"></span></label>
+      <select id="wellPick" class="select"></select>
+      <div class="row">
+        <button class="btn primary" id="honestBtn" data-i18n="ci_honest"></button>
+        <button class="btn danger" id="cheatBtn" data-i18n="ci_cheat"></button>
+      </div>
+      <div id="ciResult"></div>
+    </div>
+    <div class="card">
+      <h3 data-i18n="ci_ledger"></h3>
+      <table class="tbl" id="ledgerTbl"><thead><tr><th>#</th><th>Time</th><th>Well</th><th>GPS</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <!-- PREDICT -->
+  <section id="page-predict" class="page" hidden>
+    <h2 data-i18n="pr_title"></h2>
+    <p class="sub" data-i18n="pr_sub"></p>
+    <div class="grid2">
+      <div class="card">
+        <h3 data-i18n="pr_top"></h3>
+        <ol class="pr-list" id="prList"></ol>
+      </div>
+      <div class="card">
+        <h3 data-i18n="pr_model"></h3>
+        <div id="modelCard" class="model-card"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 data-i18n="pr_depth"></h3>
+      <p data-i18n="pr_depth_note"></p>
+      <div id="depthBars" class="bars"></div>
+    </div>
+  </section>
+
+  <!-- SCHOOL -->
+  <section id="page-school" class="page" hidden>
+    <h2 data-i18n="sc_title"></h2>
+    <p class="sub" data-i18n="sc_sub"></p>
+    <div class="card"><table class="tbl" id="clubTbl"><thead><tr><th>#</th><th data-i18n="sc_club"></th><th data-i18n="sc_pts"></th><th data-i18n="sc_badges"></th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="page-dash" class="page" hidden>
+    <h2 data-i18n="da_title"></h2>
+    <p class="sub" data-i18n="da_sub"></p>
+    <div class="grid3" id="kpiRow"></div>
+    <div class="card"><h3 id="unionTitle"></h3><div id="unionBars" class="bars"></div></div>
+    <div class="card">
+      <h3 data-i18n="da_cost"></h3>
+      <input type="range" id="costSlider" min="10000" max="5000000" step="10000" value="100000">
+      <div class="cost-line"><span id="costPeople"></span> <span data-i18n="da_people"></span> → <strong id="costTotal"></strong></div>
+    </div>
+  </section>
+
+  <!-- ABOUT / EVIDENCE -->
+  <section id="page-about" class="page" hidden>
+    <h2 data-i18n="ab_title"></h2>
+    <div class="card" id="aboutEvidence"></div>
+    <div class="card" id="aboutLimitations"></div>
+    <div class="card" id="aboutRoadmap"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span id="footLine"></span>
+</footer>
+
+<script src="vendor/leaflet.js"></script>
+<script src="js/wells_data.js"></script>
+<script src="js/model_data.js"></script>
+<script src="js/kit_table.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

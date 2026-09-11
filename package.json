@@ -1,0 +1,14 @@
+{
+  "name": "jolsetu",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "JolSetu — the people's bridge to safe tubewell water (Xylem GSIC 2026)",
+  "scripts": {
+    "test": "vitest run",
+    "serve": "python -m http.server 8123 --directory site"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.9"
+  }
+}

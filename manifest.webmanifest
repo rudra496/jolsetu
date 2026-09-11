@@ -1,0 +1,12 @@
+{
+  "name": "JolSetu — জলসেতু",
+  "short_name": "JolSetu",
+  "description": "AI reads a $1 arsenic test kit, QR-stamps every tubewell into a tamper-proof live map, and walks every family to the nearest verified safe well — offline, in Bangla.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f9fb",
+  "theme_color": "#0b4f6c",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
