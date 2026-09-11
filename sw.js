@@ -1,5 +1,5 @@
 /* JolSetu service worker — app shell cache-first, tiles stale-while-revalidate. */
-const SHELL = "jolsetu-shell-v2";
+const SHELL = "jolsetu-shell-v3";
 const TILE = "jolsetu-tiles-v1";
 const SHELL_FILES = [
   "./", "./index.html", "./manifest.webmanifest", "./icon.svg",

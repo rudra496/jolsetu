@@ -58,11 +58,12 @@ function show(id) {
   if (id === "predict") lazyPredict();
   if (id === "dash") renderDash();
   if (id === "checkin") renderLedger();
+  if (id === "about") renderAbout();
 }
 
 $("#langBtn").addEventListener("click", () => {
   setLang(getLang() === "en" ? "bn" : "en");
-  renderStaticText(); nav();
+  renderStaticText(); nav(); renderAbout();
 });
 $("#voiceBtn").addEventListener("click", () => {
   voiceOn = !voiceOn;
@@ -427,6 +428,7 @@ renderHome();
 fillWellPicker();
 renderSchool();
 renderLedger();
+renderAbout();
 $("#readerHint").textContent = "";
 window.addEventListener("online", () => {});
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
