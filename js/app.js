@@ -35,8 +35,8 @@ function renderStaticText() {
     ? `এই অ্যাপের প্রতিটি কুয়া প্রকৃত পরিমাপ — কলাম্বিয়া বিশ্ববিদ্যালয়ের আড়াইহাজার জরিপের ${num(wells.length)}টি নলকূপ (HydroShare DOI 10.4211/hs.8e1373d87419447c945625af13f0a2ea)। এর মধ্যে ${num(unsafeCount)}টি অর্থাৎ ${num(Math.round((unsafeCount / wells.length) * 100))}% জাতীয় মানের চেয়ে বেশি আর্সেনিকযুক্ত। ডেমো মডেল ও কিট-তুলনা — সবই এই বাস্তব তথ্য থেকে গণনাকৃত।`
     : `Every well in this app is a real measurement — ${num(wells.length)} tubewells from Columbia University's Araihazar survey (HydroShare DOI 10.4211/hs.8e1373d87419447c945625af13f0a2ea). ${num(unsafeCount)} of them (${num(Math.round((unsafeCount / wells.length) * 100))}%) exceed the national standard. The demo model and the kit-accuracy table are both computed from this real dataset.`;
   $("#footLine").textContent = getLang() === "bn"
-    ? "জলসেতু — Xylem Global Student Innovation Challenge 2026 · পানির গুণমান বিভাগ · প্রোটোটাইপ"
-    : "JolSetu — Xylem Global Student Innovation Challenge 2026 · Water Quality · prototype";
+    ? "জলসেতু — নিরাপদ পানির সেতু · অফলাইন-ফার্স্ট প্রোটোটাইপ"
+    : "JolSetu — the people’s bridge to safe tubewell water · offline-first prototype";
 }
 
 function nav() {
