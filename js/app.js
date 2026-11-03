@@ -5,6 +5,7 @@ import {
   wellCode, verifyWellCode, geofenceVerdict, CHART,
 } from "./core.js";
 import { setLang, getLang, t, num, speak } from "./i18n.js";
+import { initVision } from "./vision.js";
 
 const SECRET = "jolsetu-demo-2026"; // demo signing key; production keys live server-side
 const $ = (s) => document.querySelector(s);
@@ -42,6 +43,7 @@ function renderStaticText() {
 function nav() {
   const pages = [
     ["home", "nav_home"], ["map", "nav_map"], ["test", "nav_test"],
+    ["vision", "nav_vision"],
     ["checkin", "nav_checkin"], ["predict", "nav_predict"],
     ["school", "nav_school"], ["dash", "nav_dash"], ["about", "nav_about"],
   ];
@@ -429,6 +431,7 @@ fillWellPicker();
 renderSchool();
 renderLedger();
 renderAbout();
+initVision();
 $("#readerHint").textContent = "";
 window.addEventListener("online", () => {});
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {

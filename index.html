@@ -100,6 +100,25 @@
     <div class="card note" data-i18n="test_kitfact"></div>
   </section>
 
+  <!-- VISION AI (Meta hackathon build, Oct 30 – Nov 3 2026) -->
+  <section id="page-vision" class="page" hidden>
+    <h2>✨ Vision AI <span style="font-size:.6em">powered by Meta (SAM 3.1 + Muse Spark)</span></h2>
+    <p class="sub">Snap the reacting vial + reference card → AI segments, reads, and advises in Bangla.</p>
+    <div class="reader-grid">
+      <div class="card">
+        <img id="visionPreview" hidden style="max-width:100%" alt="kit photo preview">
+        <p class="hint">JPG/PNG, vial + card visible, no flash glare.</p>
+      </div>
+      <div class="card" id="visionOut"><h3>Result appears here</h3></div>
+    </div>
+    <div class="row">
+      <label class="btn upload">📷 Take / upload photo<input type="file" id="visionFile" accept="image/*" capture="environment" hidden></label>
+      <button class="btn" id="visionRun">▶ Read with Meta AI</button>
+      <label style="font-size:.85em">Backend <input id="visionBackend" size="26" placeholder="http://127.0.0.1:8010"></label>
+    </div>
+    <div class="card note">Built during the Meta Global AI Developer Hackathon (Oct 26 – Nov 4 2026). Key stays server-side; this page sends photos only to your configured backend.</div>
+  </section>
+
   <!-- CHECK-IN -->
   <section id="page-checkin" class="page" hidden>
     <h2 data-i18n="ci_title"></h2>

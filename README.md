@@ -62,3 +62,25 @@ Live demo: **https://rudra496.github.io/jolsetu/**
 ## Evidence
 
 See `docs/EVIDENCE.md` (claim → source map, every DOI verified live) and `docs/MODEL_CARD.md`.
+
+---
+
+## ✨ JolSetu Vision — built during the Meta Global AI Developer Hackathon (Oct 26 – Nov 4 2026)
+
+**New work in this hackathon window (all commits Oct 30 – Nov 4 2026):**
+
+| Piece | What it is | Meta models used |
+|---|---|---|
+| `js/vision.js` + Vision AI tab | Phone photo → backend → Bangla advice + spoken output + safety sheet + registry log | — (orchestrates below) |
+| `../meta_hackathon_2026/jolsetu_vision/backend/vision_service.py` | FastAPI service: `/vision/read`, `/vision/advise`, `/vision/transcribe`, `/vision/sheet` | SAM 3.1, Muse Spark 1.3 contributor, Muse Voice Transcribe, Muse Image |
+| SAM 3.1 segmentation core | Segments reacting vial + reference card from messy photos (prompts `liquid` + `chart`, verified near-pixel-perfect); official `meta-sam-parser` mask decode | SAM 3.1 (`sam-3.1`) |
+| Colorimetry readout | Mean color inside SAM mask → CIELAB → nearest reference swatch (extends v1 `js/core.js` chart science) | — (deterministic, auditable) |
+| Bangla reasoning loop | Readout → spoken-style Bangla + English guidance, SAFE/UNSAFE/RETEST verdict, next steps (environmental guidance only) | Muse Spark 1.3 contributor (`muse-spark-1.3-contributor`) |
+| Hands-free + low-literacy | Voice Q&A in Bangla; pictorial safety sheets for low-literacy users | Muse Voice Transcribe (`muse-voice-transcribe-1.0`), Muse Image (`muse-image-1.0`) |
+| Agent loop | measure → reason → advise → log: every reading auto-logs to the tamper-proof well registry | — (closes the loop) |
+
+**What predates the hackathon (foundation, NOT claimed as new):** v1 PWA (Test Kit AI, QR map,
+risk model, check-in ledger), `js/core.js` color science, datasets, tests.
+
+**Model IDs pinned:** `sam-3.1` · `muse-spark-1.3-contributor` · `muse-voice-transcribe-1.0` ·
+`muse-image-1.0` via Meta Model API (`https://api.meta.ai/v1`, key server-side only).

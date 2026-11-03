@@ -8,6 +8,7 @@ const STR = {
   nav_home: { en: "Home", bn: "হোম" },
   nav_map: { en: "Live Map", bn: "লাইভ ম্যাপ" },
   nav_test: { en: "Test Kit AI", bn: "কিট রিডার" },
+  nav_vision: { en: "✨ Vision AI (Meta)", bn: "✨ ভিশন এআই (মেটা)" },
   nav_checkin: { en: "Well Check-in", bn: "কুয়া চেক-ইন" },
   nav_predict: { en: "Predict & Prioritize", bn: "পূর্বাভাস" },
   nav_school: { en: "School Program", bn: "স্কুল কর্মসূচি" },
